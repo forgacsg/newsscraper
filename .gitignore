@@ -130,3 +130,6 @@ dmypy.json
 
 #  ini files for configs
 *.ini
+
+# newsdata folder with scraped data
+newsdata/
