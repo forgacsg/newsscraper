@@ -178,15 +178,15 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read('config.ini')
 
-    # news_data = NewsDataIOScraper(
-    #     api_key=config['NEWSDATA_IO']['api_key'], 
-    #     topics=config['NEWSDATA_IO']['topics'].split(', '),
-    #     host= config['DB_CONNECTION']['host'],
-    #     db= config['DB_CONNECTION']['database'],
-    #     user= config['DB_CONNECTION']['user'],
-    #     passwd=config['DB_CONNECTION']['password']
-    #     )
-    # news_data.send_request()
+    news_data = NewsDataIOScraper(
+        api_key=config['NEWSDATA_IO']['api_key'], 
+        topics=config['NEWSDATA_IO']['topics'].split(', '),
+        host= config['DB_CONNECTION']['host'],
+        db= config['DB_CONNECTION']['database'],
+        user= config['DB_CONNECTION']['user'],
+        passwd=config['DB_CONNECTION']['password']
+        )
+    news_data.send_request()
     
     news_api = NewsApiOrgScraper(
         api_key=config['NEWSAPI_ORG']['api_key'],
