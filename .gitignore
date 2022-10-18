@@ -130,6 +130,8 @@ dmypy.json
 
 #  ini files for configs
 *.ini
+*.todo
+*.todo.md
 
 # newsdata folder with scraped data
 newsdata/
