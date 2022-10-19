@@ -17,10 +17,6 @@ class Scraper():
 
     def _colored(self, r, g, b, text):
         return f"\033[38;2;{r};{g};{b}m{text}\033[38;2;255;255;255m"
-    
-    def _connect_to_db(self):
-        # to be implemented
-        pass
 
     def _screen_clear(self):
     # for mac and linux(here, os.name is 'posix')
@@ -38,9 +34,7 @@ class Scraper():
     
     def write_to_db(self):
         def insert_data(connection, cursor):
-            # if not self.df:
-            #     print('no data present')
-            #     return None
+
             table_name = self.table
             columns = ','.join(self.df.columns.tolist())
             for i in self.df.index:
@@ -59,7 +53,6 @@ class Scraper():
                 [str(self.df.at[i,col]) for col in list(self.df.columns)]
                 sql=f'INSERT INTO {table_name}({columns})\nVALUES ({",".join(values)});'
                 
-                # print(sql)
                 cursor.execute(sql)
             connection.commit()
         
@@ -143,7 +136,6 @@ class NewsApiOrgScraper(Scraper):
             for domain in self.domains:
                 print(f'starting {self._colored(255,255,0, domain)}')
 
-                # df = request_articles(topic=topic, apikey=apikey, domain=domain)
                 startday = str(-datetime.timedelta(weeks=4))
                 query_string = f"https://newsapi.org/v2/everything?q={topic}&from={startday}&sortBy=publishedAt&apiKey={self.api_key}&domains={domain}"
                 r = requests.get(query_string)
@@ -165,8 +157,8 @@ class NewsApiOrgScraper(Scraper):
                 time.sleep(1)
         
         self.df.reset_index(drop=True, inplace=True)
+        
         # self.write_to_file()
-        # print(self.df.head(1))
         self.write_to_db()
         return
 
