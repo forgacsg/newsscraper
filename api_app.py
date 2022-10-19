@@ -55,15 +55,15 @@ class Scraper():
                 
                 cursor.execute(sql)
             connection.commit()
-        
-        conn = psycopg2.connect(
+        with psycopg2.connect(
             host=self.host,
             database = self.db,
             user = self.user,
             password = self.password
-        )
-        cursor = conn.cursor()
-        insert_data(connection = conn, cursor=cursor)
+        ) as conn:
+            cursor = conn.cursor()
+            insert_data(connection = conn, 
+                        cursor=cursor)
 
 
 
@@ -157,7 +157,7 @@ class NewsApiOrgScraper(Scraper):
                 time.sleep(1)
         
         self.df.reset_index(drop=True, inplace=True)
-        
+
         # self.write_to_file()
         self.write_to_db()
         return
